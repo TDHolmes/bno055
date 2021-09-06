@@ -22,7 +22,10 @@ pub use regs::BNO055_ID;
 
 /// All possible errors in this crate
 #[derive(Debug)]
-pub enum Error<E> {
+pub enum Error<E>
+where
+    E: core::fmt::Debug,
+{
     /// I2C bus error
     I2c(E),
 
@@ -42,6 +45,7 @@ pub struct Bno055<I> {
 impl<I, E> Bno055<I>
 where
     I: WriteRead<Error = E> + Write<Error = E>,
+    E: core::fmt::Debug,
 {
     /// Side-effect-free constructor.
     /// Nothing will be read or written before `init()` call.
